@@ -9,6 +9,7 @@ Demo how to use VTK 7.x in Qt 5.7
 1.下载安装 Qt 5.7 完整安装包，会连同 Qt Creator 一起安装。 
 
 2.下载 VTK 7.1 源码。编译配置，默认 VTK 只打开对 Qt 4 的编译，而我们是对 Qt 5.x 的编译，所以关键是要指定 Qt 的安装位置以打开对 Qt 的支持.
+
 ```
 cmake -DVTK_QT_VERSION:STRING=5 \
      -DQT_QMAKE_EXECUTABLE:PATH=/path/to/Qt/5.7/gcc_64/bin/qmake \
@@ -21,18 +22,21 @@ make -j 7
 sudo make install
 sudo ldconfig // 更新系统的动态库
 ```
+
 cmake 配置时可以结合 ccmake 这个图形化界面，直观地了解配置了什么。  
-参考 VTK 官方文档：http://www.vtk.org/Wiki/VTK/Configure_and_Build#Qt_4.8..2A  
+参考 VTK 官方文档：[http://www.vtk.org/Wiki/VTK/Configure_and_Build#Qt_4.8..2A](http://www.vtk.org/Wiki/VTK/Configure_and_Build#Qt_4.8..2A)
 
 3.为了能在 Qt Creator 的 Designer 中使用 QVTKWidget，需要将编译出的 Qt Designer 的插件复制至对应目录下。  
 这里分两种情况，一种是 Qt Designer 独立使用的，一种是内嵌在 Qt Creator 中的 Qt Designer。  
 Honhe 在这里使用的是内嵌在 Qt Creator 中的 Qt Designer，因此操作如下：
+
 ```
 cp VKT-7.1.0_build/lib/libQVTKWidgetPlugin.so /Qt/Tools/QtCreator/bin/designer/
 ```
+
 可能`bin/designer/`这个目录不存在，自己建一个就OK，这时再打开 Qt Creator 中 Designer 就可以看到 QVTKWidget。
 
-    ![QVTKWidget_in_Qt_Designer_screenshot](./art/QVTKWidget_in_Qt_Designer_screenshot.png)
+![QVTKWidget_in_Qt_Designer_screenshot](./art/QVTKWidget_in_Qt_Designer_screenshot.png)
 
 参考 Qt 官方文档：http://doc.qt.io/qtcreator/adding-plugins.html Locating Qt Designer Plugins 这一节。
 VTK 的文档有点过时了: http://www.vtk.org/Wiki/VTK/Tutorials/QtSetup  
@@ -158,3 +162,7 @@ LIBS += -L/usr/local/lib \
 -lvtkViewsQt-7.1 \
 -lvtkzlib-7.1 \
 ```
+
+## qmake 原理图
+![qmake 原理图](http://images2015.cnblogs.com/blog/341522/201511/341522-20151109043426712-1965765023.jpg)
+http://images2015.cnblogs.com/blog/341522/201511/341522-20151109043426712-1965765023.jpg
